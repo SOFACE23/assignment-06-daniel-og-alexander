@@ -13,9 +13,9 @@
 #include <string>
 #include <boost/asio.hpp>
 
-using boost::asio::ip::tcp;
+using boost::asio::ip::tcp; 
 
-std::string make_daytime_string()
+std::string make_daytime_string() //create a messeage with the current time
 {
   using namespace std; // For time_t, time and ctime;
   time_t now = time(0);
@@ -26,11 +26,11 @@ int main()
 {
   try
   {
-    boost::asio::io_context io_context;
+    boost::asio::io_context io_context; //Provides core I/O functionality. 
 
-    tcp::acceptor acceptor(io_context, tcp::endpoint(tcp::v4(), 13));
+    tcp::acceptor acceptor(io_context, tcp::endpoint(tcp::v4(), 13)); //connecting to port 13 of the local machine 
 
-    while (true)
+    while (true) //continuously listens for request and replies with the messeage 
     {
       tcp::socket socket(io_context);
       acceptor.accept(socket);
@@ -41,7 +41,7 @@ int main()
       boost::asio::write(socket, boost::asio::buffer(message), ignored_error);
     }
   }
-  catch (std::exception &e)
+  catch (std::exception &e) //catching errors and prints the error
   {
     std::cerr << e.what() << std::endl;
   }
